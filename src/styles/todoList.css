@@ -1,0 +1,19 @@
+.project-container{
+ display: flex;
+ align-items: center;
+}
+.project-container>h3{
+    margin-right: auto;
+}
+.project-container:hover{
+    background-color: rgb(71, 71, 71);
+}
+.project-container:hover .plus{
+    visibility: visible;
+}
+.project-container:hover .arrow{
+    transform: rotate(180deg);
+}
+.plus{
+ visibility: hidden;
+}
