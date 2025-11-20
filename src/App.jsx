@@ -1,5 +1,6 @@
 import './App.css'
 import TodoList from './components/todoList'
+import ListInput from './components/addList'
 function App() {
 
 
@@ -11,7 +12,7 @@ function App() {
 </div>
 
 <div className='main'>
-
+<ListInput type={'List'}/>
 </div>
  </div>
     </>

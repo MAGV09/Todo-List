@@ -1,0 +1,101 @@
+dialog {
+  border: none;
+  border-radius: 12px;
+  padding: 0;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 90%;
+}
+
+dialog::backdrop {
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+}
+
+/* Form Styles */
+dialog form {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* Form Sections */
+dialog form > div {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+/* Label Styles */
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-weight: 600;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+/* Input Styles */
+input[type="text"],
+input[type="date"],
+select {
+  padding: 0.75rem;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+  font-family: inherit;
+}
+
+input[type="text"]:focus,
+input[type="date"]:focus,
+select:focus {
+  outline: none;
+  border-color: #4a90e2;
+}
+
+/* Select Styles */
+select {
+  cursor: pointer;
+  background-color: white;
+}
+
+/* Button Container */
+dialog form > button {
+  margin-top: 0.5rem;
+}
+
+/* Buttons */
+button {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+button[type="submit"],
+button:last-child {
+  background-color: #4a90e2;
+  color: white;
+}
+
+button[type="submit"]:hover,
+button:last-child:hover {
+  background-color: #357abd;
+  transform: translateY(-1px);
+}
+
+button:first-of-type {
+  background-color: #f5f5f5;
+  color: #666;
+  margin-right: 0.75rem;
+}
+
+button:first-of-type:hover {
+  background-color: #e0e0e0;
+}
