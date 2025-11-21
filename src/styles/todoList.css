@@ -1,11 +1,12 @@
-.project-container{
+.project-container,.add-task{
  display: flex;
  align-items: center;
+ gap: 10px;
 }
-.project-container>h3{
-    margin-right: auto;
+.project-container> h3{
+margin-right: auto;
 }
-.project-container:hover{
+.project-container:hover,.add-task:hover{
     background-color: rgb(71, 71, 71);
 }
 .project-container:hover .plus{
@@ -16,4 +17,11 @@
 }
 .plus{
  visibility: hidden;
+}
+.plus:hover,.arrow:hover{
+    background-color: rgb(59, 59, 59);
+
+}
+ul{
+    padding: 1rem;
 }

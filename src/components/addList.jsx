@@ -1,6 +1,9 @@
 import { useState } from 'react';
-import '../styles/addList.css'
-function ListInput({ type }) {
+import '../styles/addList.css';
+import { createProject, createList } from '../utils/dataFactory';
+import { useRef } from 'react';
+
+function ListInput({ type, projects, setProjects, dialogOpen, setDialogOpen }) {
   const [projectTitle, setProjectTitle] = useState('');
   const [list, setList] = useState({
     title: '',
@@ -8,6 +11,8 @@ function ListInput({ type }) {
     priority: '',
     description: '',
   });
+  const dialogRef = useRef(null);
+
   function handleProjectChange(e, set) {
     set(e.target.value);
   }
@@ -18,22 +23,19 @@ function ListInput({ type }) {
       [val]: e.target.value,
     });
   }
+  function handleSubmit(e, formData) {
+    e.preventDefault();
+    type !== 'List' && setProjects([...projects, createProject(formData)]);
+  }
+
+  const closeDialog = () => {
+    dialogRef.current.close();
+    setDialogOpen(0);
+  };
   return (
-    <dialog open={true}>
-      <form method="dialog" onSubmit={(e)=> e.preventDefault()}>
-        {type === 'project' && (
-          <div>
-            <label>
-              Title:
-              <input
-                type="text"
-                value={projectTitle}
-                onChange={(e) => handleProjectChange(e, setProjectTitle)}
-              />
-            </label>
-          </div>
-        )}
-        {type === 'List' && (
+    <dialog open={dialogOpen} ref={dialogRef}>
+      <form method="dialog" onSubmit={(e) => handleSubmit(e, projectTitle)}>
+        {type === 'List' ? (
           <div>
             <div>
               <label>
@@ -81,14 +83,32 @@ function ListInput({ type }) {
               </select>
             </div>
           </div>
+        ) : (
+          <div>
+            <label>
+              Title:
+              <input
+                type="text"
+                value={projectTitle}
+                onChange={(e) => handleProjectChange(e, setProjectTitle)}
+              />
+            </label>
+          </div>
         )}
-        <button>Cancel</button>
-        <button>Add</button>
-        
+        <div className="button-container">
+          {type === 'List' && (
+            <select>
+              <option value="low">Select Project</option>
+              <option value="medium">Medium</option>
+              <option value="high">High</option>
+            </select>
+          )}
+          <button onClick={closeDialog}>Cancel</button>
+          <button onClick={closeDialog}>Add</button>
+        </div>
       </form>
     </dialog>
   );
 }
-
 
 export default ListInput;
