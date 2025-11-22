@@ -18,6 +18,7 @@ function ListInput({
     dueDate: '',
     priority: '',
     description: '',
+    projectLink: '',
   });
   const dialogRef = useRef(null);
 
@@ -34,9 +35,17 @@ function ListInput({
   function handleSubmit(e, formData, listData) {
     e.preventDefault();
     type !== 'List' && setProjects([...projects, createProject(formData)]);
-    const { title, dueDate, priority, description } = listData;
-    type === 'List' &&
-      setTasks([...tasks, createList(title, dueDate, priority, description)]);
+    const { title, dueDate, priority, description, projectLink } = listData;
+    const newTask = createList(title, dueDate, priority, description);
+    console.log(projectLink);
+    type === 'List' && setTasks([...tasks, newTask]);
+    if (type === 'List') {
+      const selectedProject = projects.find(
+        (project) => project.id === projectLink
+      );
+      selectedProject.todoList.push(newTask.id);
+    }
+
     resetFields();
   }
   function resetFields() {
@@ -47,6 +56,7 @@ function ListInput({
     dialogRef.current.close();
     setDialogOpen(0);
   };
+
   return (
     <dialog open={dialogOpen} ref={dialogRef}>
       <form
@@ -98,9 +108,9 @@ function ListInput({
                 required
               >
                 <option value="">Select priority</option>
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
               </select>
             </div>
           </div>
@@ -119,13 +129,18 @@ function ListInput({
         )}
         <div className="button-container">
           {type === 'List' && (
-            <select>
+            <select onChange={(e) => handleListChange(e, 'projectLink')}>
               <option value="low">Select Project</option>
-              <option value="medium">Medium</option>
-              <option value="high">High</option>
+              {projects.map((project) => (
+                <option value={project.id} key={project.id}>
+                  {project.title}
+                </option>
+              ))}
             </select>
           )}
-          <button onClick={closeDialog} type='reset'>Cancel</button>
+          <button onClick={closeDialog} type="reset">
+            Cancel
+          </button>
           <button onClick={closeDialog}>Add</button>
         </div>
       </form>

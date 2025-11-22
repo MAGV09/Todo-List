@@ -8,15 +8,16 @@ import {
 } from '@mdi/js';
 import '../styles/taskList.css';
 
-function TaskList({ projects, tasks,setDialogOpen }) {
+function TaskList({ projects, tasks,setDialogOpen ,currentProject, setCurrentProject}) {
     function handleAddTask(){
   setDialogOpen(2)
 }
+console.log(currentProject)
   return (
     <div className="hero">
-      <h2>{projects.map((project) => project.title)}</h2>
+      <h2>{projects.filter((project) => project.id===currentProject.id).map((project)=>project.title)}</h2>
       <div>
-        {tasks.map((task) => (
+        {tasks.filter(task=>currentProject.list.includes(task.id)).map((task) => (
           <div className="task" key={task.id}>
             <Icon path={mdiCircleOutline} size={1} className="circle" />
             <div className="task-container">

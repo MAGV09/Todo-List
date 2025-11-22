@@ -4,7 +4,7 @@ import Icon from '@mdi/react';
 import { mdiChevronDown, mdiPlus, mdiPlusCircle } from '@mdi/js';
 import '../styles/todoList.css';
 
-function ProjectList({ projects, setProject,dialogOpen,setDialogOpen }) {
+function ProjectList({ projects, setProject,dialogOpen,setDialogOpen ,currentProject,setCurrentProject}) {
   const [open, setOpen] = useState(false);
   function handleArrowClick() {
     open ? setOpen(false) : setOpen(true);
@@ -14,6 +14,10 @@ function handleAddProject(){
 }
 function handleAddTask(){
   setDialogOpen(2)
+}
+function selectProject(project,setProject){
+setCurrentProject({id:project.id,list:project.todoList})
+
 }
   return (
     <div>
@@ -47,7 +51,7 @@ function handleAddTask(){
           />
         </div>
         {open &&
-          projects.map((project) => <li key={project.id}>{project.title}</li>)}
+          projects.map((project) => <li key={project.id} onClick={()=>selectProject(project,selectProject)}>{project.title}</li>)}
       </ul>
     </div>
   );
