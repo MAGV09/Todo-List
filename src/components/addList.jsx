@@ -3,7 +3,15 @@ import '../styles/addList.css';
 import { createProject, createList } from '../utils/dataFactory';
 import { useRef } from 'react';
 
-function ListInput({ type, projects, setProjects, dialogOpen, setDialogOpen }) {
+function ListInput({
+  type,
+  projects,
+  setProjects,
+  dialogOpen,
+  setDialogOpen,
+  tasks,
+  setTasks,
+}) {
   const [projectTitle, setProjectTitle] = useState('');
   const [list, setList] = useState({
     title: '',
@@ -23,18 +31,28 @@ function ListInput({ type, projects, setProjects, dialogOpen, setDialogOpen }) {
       [val]: e.target.value,
     });
   }
-  function handleSubmit(e, formData) {
+  function handleSubmit(e, formData, listData) {
     e.preventDefault();
     type !== 'List' && setProjects([...projects, createProject(formData)]);
+    const { title, dueDate, priority, description } = listData;
+    type === 'List' &&
+      setTasks([...tasks, createList(title, dueDate, priority, description)]);
+    resetFields();
   }
-
+  function resetFields() {
+    setProjectTitle('');
+    setList({ title: '', dueDate: '', priority: '', description: '' });
+  }
   const closeDialog = () => {
     dialogRef.current.close();
     setDialogOpen(0);
   };
   return (
     <dialog open={dialogOpen} ref={dialogRef}>
-      <form method="dialog" onSubmit={(e) => handleSubmit(e, projectTitle)}>
+      <form
+        method="dialog"
+        onSubmit={(e) => handleSubmit(e, projectTitle, list)}
+      >
         {type === 'List' ? (
           <div>
             <div>
@@ -44,6 +62,7 @@ function ListInput({ type, projects, setProjects, dialogOpen, setDialogOpen }) {
                   type="text"
                   value={list.title}
                   onChange={(e) => handleListChange(e, 'title')}
+                  required
                 />
               </label>
             </div>
@@ -66,6 +85,7 @@ function ListInput({ type, projects, setProjects, dialogOpen, setDialogOpen }) {
                   type="date"
                   value={list.dueDate}
                   onChange={(e) => handleListChange(e, 'dueDate')}
+                  required
                 />
               </label>
             </div>
@@ -75,6 +95,7 @@ function ListInput({ type, projects, setProjects, dialogOpen, setDialogOpen }) {
                 name="priority"
                 value={list.priority}
                 onChange={(e) => handleListChange(e, 'priority')}
+                required
               >
                 <option value="">Select priority</option>
                 <option value="low">Low</option>
@@ -91,6 +112,7 @@ function ListInput({ type, projects, setProjects, dialogOpen, setDialogOpen }) {
                 type="text"
                 value={projectTitle}
                 onChange={(e) => handleProjectChange(e, setProjectTitle)}
+                required
               />
             </label>
           </div>
@@ -103,7 +125,7 @@ function ListInput({ type, projects, setProjects, dialogOpen, setDialogOpen }) {
               <option value="high">High</option>
             </select>
           )}
-          <button onClick={closeDialog}>Cancel</button>
+          <button onClick={closeDialog} type='reset'>Cancel</button>
           <button onClick={closeDialog}>Add</button>
         </div>
       </form>

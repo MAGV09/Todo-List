@@ -1,0 +1,60 @@
+.hero{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+.task {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-left: 5rem;
+}
+.hero>h2{
+    margin-bottom: 2rem;
+}
+.task-container {
+  display: flex;
+  align-items: start;
+  flex-direction: column;
+  text-align: start;
+  border-bottom:1px solid grey ;
+width: 500px;
+}
+.task-container > p {
+  font-size: 0.85rem;
+  color: rgb(192, 192, 192);
+}
+span{
+  color: rgb(192, 192, 192);
+    
+}
+.task-container > p:first-child{
+    font-size: 1rem;
+    color: inherit;
+}
+.task-container>div{
+    display: flex;
+    gap: 0.5rem;
+}
+.circle{
+    vertical-align: baseline;
+    margin: 4px;
+}
+P{
+    line-height: 0.1;
+}
+.icon-container{
+    display: flex;
+    gap: 1rem;
+    visibility: hidden;
+}
+.task:hover .icon-container{
+    visibility: visible;
+}
+
+.add-list{
+ display: flex;
+ align-items: center;
+ gap: 10px;
+}

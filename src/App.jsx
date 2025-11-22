@@ -7,18 +7,19 @@ import { createProject,createList } from './utils/dataFactory'
 
 function App() {
 const [projects,setProjects]= useState([createProject('First Project')])
+const [tasks,setTasks] = useState([createList('Finish the project','21/11','high','need to finish this project asap')])
 const [dialogOpen,setDialogOpen] = useState(0)
   return (
     <>
  <div className='container'>
 <div className='sidebar'>
  <ProjectList projects={projects} setProject={setProjects} dialogOpen={dialogOpen} setDialogOpen={setDialogOpen}/>
- <ListInput  projects={projects} setProjects={setProjects} dialogOpen={dialogOpen===1} setDialogOpen={setDialogOpen}/>
+ <ListInput  projects={projects} setProjects={setProjects} dialogOpen={dialogOpen===1} setDialogOpen={setDialogOpen} tasks={tasks} setTasks={setTasks}/>
 </div>
 
 <div className='main'>
-  <TaskList/>
-<ListInput type={'List'} projects={projects} setProjects={setProjects} dialogOpen={dialogOpen===2} setDialogOpen={setDialogOpen}/>
+  <TaskList projects={projects} tasks={tasks} setDialogOpen={setDialogOpen}/>
+<ListInput type={'List'} projects={projects} setProjects={setProjects} dialogOpen={dialogOpen===2} setDialogOpen={setDialogOpen} tasks={tasks} setTasks={setTasks}/>
 </div>
  </div>
     </>
