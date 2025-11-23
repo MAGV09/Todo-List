@@ -1,8 +1,83 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import '../styles/addList.css';
 import { createProject, createList } from '../utils/dataFactory';
 import { useRef } from 'react';
 
+function Field({ fieldType, value, onChange, required, children }) {
+  return (
+    <div>
+      <label>
+        {children}
+        <input
+          type={fieldType}
+          value={value}
+          onChange={onChange}
+          required={required}
+        />
+      </label>
+    </div>
+  );
+}
+function ListFields({ list, handleListChange }) {
+  return (
+    <Fragment>
+      <Field
+        fieldType="text"
+        value={list.title}
+        required={true}
+        onChange={(e) => handleListChange(e, 'title')}
+      >
+        Title:
+      </Field>
+
+      <Field
+        fieldType="text"
+        value={list.description}
+        required={false}
+        onChange={(e) => handleListChange(e, 'description')}
+      >
+        Description:
+      </Field>
+
+      <Field
+        fieldType="date"
+        value={list.dueDate}
+        required={true}
+        onChange={(e) => handleListChange(e, 'dueDate')}
+      >
+        Due Date:
+      </Field>
+
+      <div>
+        <label>
+          Priority:
+          <select
+            value={list.priority}
+            onChange={(e) => handleListChange(e, 'priority')}
+            required
+          >
+            <option value="">Select priority</option>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+          </select>
+        </label>
+      </div>
+    </Fragment>
+  );
+}
+function ProjectFields({ projectTitle, setProjectTitle, handleProjectChange }) {
+  return (
+    <Field
+      fieldType="text"
+      value={projectTitle}
+      required={true}
+      onChange={(e) => handleProjectChange(e, setProjectTitle)}
+    >
+      Title:
+    </Field>
+  );
+}
 function ListInput({
   type,
   projects,
@@ -11,6 +86,8 @@ function ListInput({
   setDialogOpen,
   tasks,
   setTasks,
+  currentTask,
+  setCurrentTask,
 }) {
   const [projectTitle, setProjectTitle] = useState('');
   const [list, setList] = useState({
@@ -61,6 +138,12 @@ function ListInput({
     dialogRef.current.close();
     setDialogOpen(0);
   };
+  function handleEditTask() {
+    const task = tasks.find((task) => task.id === currentTask);
+    setList({ ...task });
+    setDialogOpen(3);
+    setCurrentTask(0);
+  }
 
   return (
     <dialog open={dialogOpen} ref={dialogRef}>
@@ -70,66 +153,15 @@ function ListInput({
       >
         {type === 'List' ? (
           <div>
-            <div>
-              <label>
-                Title:
-                <input
-                  type="text"
-                  value={list.title}
-                  onChange={(e) => handleListChange(e, 'title')}
-                  required
-                />
-              </label>
-            </div>
-
-            <div>
-              <label>
-                Description:
-                <input
-                  type="text"
-                  value={list.description}
-                  onChange={(e) => handleListChange(e, 'description')}
-                />
-              </label>
-            </div>
-
-            <div>
-              <label>
-                Due Date:
-                <input
-                  type="date"
-                  value={list.dueDate}
-                  onChange={(e) => handleListChange(e, 'dueDate')}
-                  required
-                />
-              </label>
-            </div>
-
-            <div>
-              <select
-                name="priority"
-                value={list.priority}
-                onChange={(e) => handleListChange(e, 'priority')}
-                required
-              >
-                <option value="">Select priority</option>
-                <option value="Low">Low</option>
-                <option value="Medium">Medium</option>
-                <option value="High">High</option>
-              </select>
-            </div>
+            <ListFields list={list} handleListChange={handleListChange} />
           </div>
         ) : (
           <div>
-            <label>
-              Title:
-              <input
-                type="text"
-                value={projectTitle}
-                onChange={(e) => handleProjectChange(e, setProjectTitle)}
-                required
-              />
-            </label>
+            <ProjectFields
+              projectTitle={projectTitle}
+              setProjectTitle={setProjectTitle}
+              handleProjectChange={handleProjectChange}
+            />
           </div>
         )}
         <div className="button-container">

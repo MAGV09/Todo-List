@@ -11,22 +11,9 @@ const [tasks,setTasks] = useState([])
 // createList('Finish the project','21/11','high','need to finish this project asap')
 const [dialogOpen,setDialogOpen] = useState(0)
 const [currentProject,setCurrentProject] = useState({id:'',list:[]})
-// projects.forEach((project)=>{
-//   if(project.title ==='First Project'){
-//     project.todoList.push()
-//   }
-// })
-// projects.forEach((project)=>{project.todoList.push(tasks[0].id)})
-function temp(){
-  projects.forEach((project)=>{project.todoList.push(tasks[0].id)
-    console.log(project.todoList)
-    tasks.forEach((task)=>{
-      if(project.todoList.includes(task.id))
-      console.log(task.title)
-    })
-  })
-}
-// temp()
+const [currentTask,setCurrentTask] = useState()
+
+
   return (
     <>
  <div className='container'>
@@ -36,8 +23,10 @@ function temp(){
 </div>
 
 <div className='main'>
-  <TaskList projects={projects} tasks={tasks} setDialogOpen={setDialogOpen} currentProject={currentProject} setCurrentProject={setCurrentProject}/>
-<ListInput type={'List'} projects={projects} setProjects={setProjects} dialogOpen={dialogOpen===2} setDialogOpen={setDialogOpen} tasks={tasks} setTasks={setTasks}/>
+  <TaskList projects={projects} tasks={tasks} setDialogOpen={setDialogOpen} currentProject={currentProject} setCurrentProject={setCurrentProject} currentTask ={currentTask} setCurrentTask={setCurrentTask}/>
+<ListInput type={'List'} projects={projects} setProjects={setProjects} dialogOpen={dialogOpen===2} setDialogOpen={setDialogOpen} tasks={tasks} setTasks={setTasks} currentTask ={currentTask} setCurrentTask={setCurrentTask}/>
+<ListInput type={'Update'} projects={projects} setProjects={setProjects} dialogOpen={dialogOpen===3} setDialogOpen={setDialogOpen} tasks={tasks} setTasks={setTasks} currentTask ={currentTask} setCurrentTask={setCurrentTask}/>
+
 </div>
  </div>
     </>

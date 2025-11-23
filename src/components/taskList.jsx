@@ -8,11 +8,13 @@ import {
 } from '@mdi/js';
 import '../styles/taskList.css';
 
-function TaskList({ projects, tasks,setDialogOpen ,currentProject, setCurrentProject}) {
-    function handleAddTask(){
+function TaskList({ projects, tasks,setDialogOpen ,currentProject, setCurrentProject,currentTask,setCurrentTask}) {
+    function handleAddTask(task){
   setDialogOpen(2)
 }
-console.log(currentProject)
+function handleEdit(id){
+setCurrentTask(id)
+}
   return (
     <div className="hero">
       <h2>{projects.filter((project) => project.id===currentProject.id).map((project)=>project.title)}</h2>
@@ -29,7 +31,7 @@ console.log(currentProject)
               </div>
             </div>
             <div className="icon-container">
-              <Icon path={mdiPencilOutline} size={1} className="circle" />
+              <Icon path={mdiPencilOutline} size={1} className="circle" onClick={(e)=>handleEdit(task.id)} />
               <Icon path={mdiTrashCanOutline} size={1} className="circle" />
             </div>
           </div>
