@@ -111,16 +111,18 @@ function ListInput({
   }
   function handleSubmit(e, formData, listData) {
     e.preventDefault();
-    type !== 'List' && setProjects([...projects, createProject(formData)]);
-    const { title, dueDate, priority, description, projectLink } = listData;
-    const newTask = createList(title, dueDate, priority, description);
-    console.log(projectLink);
-    type === 'List' && setTasks([...tasks, newTask]);
-
-    const selectedProject = projects.find(
-      (project) => project.id === projectLink
-    );
-    selectedProject.todoList.push(newTask.id);
+    if (type !== 'List') {
+      setProjects([...projects, createProject(formData)]);
+    } else {
+      const { title, dueDate, priority, description, projectLink } = listData;
+      const newTask = createList(title, dueDate, priority, description);
+      console.log(projectLink);
+      setTasks([...tasks, newTask]);
+      const selectedProject = projects.find(
+        (project) => project.id === projectLink
+      );
+      selectedProject.todoList.push(newTask.id);
+    }
 
     resetFields();
   }
