@@ -39,18 +39,23 @@ function ListInput({
     const newTask = createList(title, dueDate, priority, description);
     console.log(projectLink);
     type === 'List' && setTasks([...tasks, newTask]);
-    if (type === 'List') {
-      const selectedProject = projects.find(
-        (project) => project.id === projectLink
-      );
-      selectedProject.todoList.push(newTask.id);
-    }
+
+    const selectedProject = projects.find(
+      (project) => project.id === projectLink
+    );
+    selectedProject.todoList.push(newTask.id);
 
     resetFields();
   }
   function resetFields() {
     setProjectTitle('');
-    setList({ title: '', dueDate: '', priority: '', description: '' });
+    setList({
+      title: '',
+      dueDate: '',
+      priority: '',
+      description: '',
+      projectLink: '',
+    });
   }
   const closeDialog = () => {
     dialogRef.current.close();
@@ -129,8 +134,14 @@ function ListInput({
         )}
         <div className="button-container">
           {type === 'List' && (
-            <select onChange={(e) => handleListChange(e, 'projectLink')}>
-              <option value="low">Select Project</option>
+            <select
+              value={list.projectLink}
+              onChange={(e) => handleListChange(e, 'projectLink')}
+              required
+            >
+              <option value="" disabled>
+                Select Project
+              </option>
               {projects.map((project) => (
                 <option value={project.id} key={project.id}>
                   {project.title}
