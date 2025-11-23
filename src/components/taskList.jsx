@@ -7,14 +7,24 @@ import {
   mdiPlus,
 } from '@mdi/js';
 import '../styles/taskList.css';
-
-function TaskList({ projects, tasks,setDialogOpen ,currentProject, setCurrentProject,currentTask,setCurrentTask}) {
+import ListInput from './addList';
+import Test from './test';
+function TaskList({ projects,setProjects ,tasks,setTasks,dialogOpen,setDialogOpen ,currentProject, setCurrentProject,currentTask,setCurrentTask}) {
     function handleAddTask(task){
   setDialogOpen(2)
 }
 function handleEdit(id){
 setCurrentTask(id)
+ setDialogOpen(3);
+    //  const task = tasks.find((task) => task.id === currentTask);
+   
+    // setList({ ...task });
+    setDialogOpen(3);
 }
+//  function handleEditTask() {
+
+//   }
+
   return (
     <div className="hero">
       <h2>{projects.filter((project) => project.id===currentProject.id).map((project)=>project.title)}</h2>
@@ -36,7 +46,9 @@ setCurrentTask(id)
             </div>
           </div>
         ))}
+        <Test  projects={projects} setProjects={setProjects} dialogOpen={dialogOpen===3} setDialogOpen={setDialogOpen} tasks={tasks} setTasks={setTasks} currentTask ={currentTask} setCurrentTask={setCurrentTask}/>
       </div>
+
       <div className="add-list" onClick={handleAddTask} >
         <Icon path={mdiPlus} size={1.2} />
         <p>Add Task</p>

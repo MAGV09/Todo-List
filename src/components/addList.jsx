@@ -123,7 +123,6 @@ function ListInput({
       );
       selectedProject.todoList.push(newTask.id);
     }
-
     resetFields();
   }
   function resetFields() {
@@ -140,13 +139,7 @@ function ListInput({
     dialogRef.current.close();
     setDialogOpen(0);
   };
-  function handleEditTask() {
-    const task = tasks.find((task) => task.id === currentTask);
-    setList({ ...task });
-    setDialogOpen(3);
-    setCurrentTask(0);
-  }
-
+ 
   return (
     <dialog open={dialogOpen} ref={dialogRef}>
       <form
