@@ -86,8 +86,6 @@ function ListInput({
   setDialogOpen,
   tasks,
   setTasks,
-  currentTask,
-  setCurrentTask,
 }) {
   const [projectTitle, setProjectTitle] = useState('');
   const [list, setList] = useState({
@@ -116,7 +114,6 @@ function ListInput({
     } else {
       const { title, dueDate, priority, description, projectLink } = listData;
       const newTask = createList(title, dueDate, priority, description);
-      console.log(projectLink);
       setTasks([...tasks, newTask]);
       const selectedProject = projects.find(
         (project) => project.id === projectLink

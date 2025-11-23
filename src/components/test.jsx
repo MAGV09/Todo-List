@@ -1,6 +1,5 @@
-import { Fragment, useState } from 'react';
+import { Fragment } from 'react';
 import '../styles/addList.css';
-import { createProject, createList } from '../utils/dataFactory';
 import { useRef } from 'react';
 
 function Field({ fieldType, value, onChange, required, children }) {
@@ -68,9 +67,6 @@ function ListFields({ list, handleListChange }) {
 }
 
 function Test({
-  type,
-  projects,
-  setProjects,
   dialogOpen,
   setDialogOpen,
   tasks,
@@ -93,11 +89,10 @@ function Test({
         task.id === currentTask ? { ...task, [val]: e.target.value } : task
       )
     );
-    
   }
-  function handleSubmit(e, formData, listData) {
+  function handleSubmit(e) {
     e.preventDefault();
-    setCurrentTask(0)
+    setCurrentTask(0);
   }
 
   const closeDialog = () => {
@@ -107,13 +102,13 @@ function Test({
 
   return (
     <dialog open={dialogOpen} ref={dialogRef}>
-      <form method="dialog" onSubmit={(e) => handleSubmit(e, promised)}>
+      <form method="dialog" onSubmit={(e) => handleSubmit(e)}>
         <div>
           <ListFields list={promised} handleListChange={handleListChange} />
         </div>
 
         <div className="button-container">
-          <button onClick={closeDialog} type="reset">
+          <button onClick={closeDialog}>
             Cancel
           </button>
           <button onClick={closeDialog}>Add</button>
