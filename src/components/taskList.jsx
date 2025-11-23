@@ -16,22 +16,21 @@ function TaskList({ projects,setProjects ,tasks,setTasks,dialogOpen,setDialogOpe
 function handleEdit(id){
 setCurrentTask(id)
  setDialogOpen(3);
-    //  const task = tasks.find((task) => task.id === currentTask);
-   
-    // setList({ ...task });
-    setDialogOpen(3);
 }
-//  function handleEditTask() {
+function handleDelete(id){
+setTasks(
+      tasks.filter((task) =>
+        task.id !== id 
+      ))
 
-//   }
-
+}
   return (
     <div className="hero">
       <h2>{projects.filter((project) => project.id===currentProject.id).map((project)=>project.title)}</h2>
       <div>
         {tasks.filter(task=>currentProject.list.includes(task.id)).map((task) => (
           <div className="task" key={task.id}>
-            <Icon path={mdiCircleOutline} size={1} className="circle" />
+            <Icon path={mdiCircleOutline} size={1} className="circle" onClick={()=>handleDelete(task.id,task)} />
             <div className="task-container">
               <p>{task.title}</p>
               <p>{task.description}</p>
@@ -42,7 +41,7 @@ setCurrentTask(id)
             </div>
             <div className="icon-container">
               <Icon path={mdiPencilOutline} size={1} className="circle" onClick={(e)=>handleEdit(task.id)} />
-              <Icon path={mdiTrashCanOutline} size={1} className="circle" />
+              <Icon path={mdiTrashCanOutline} size={1} className="circle" onClick={()=>handleDelete(task.id,task)} />
             </div>
           </div>
         ))}
